@@ -88,4 +88,4 @@
   (let [req (zetta/parse-once ipp-request body)]
     (when (zetta/done? req)
       (assoc (:result req)
-            :body (byte-array (:remainder req))))))
+             :body (byte-array (:remainder req))))))

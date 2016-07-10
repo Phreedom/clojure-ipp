@@ -26,8 +26,8 @@
   (let [resp (serializer/ipp-response ipp-response)]
     (log/trace (with-out-str (bs/print-bytes (bs/to-byte-buffer (byte-array (map unchecked-byte resp))))))
     {:status 200
-    :headers {"content-type" "application/ipp"}
-    :body (bs/to-input-stream (byte-array (map unchecked-byte resp)))}))
+     :headers {"content-type" "application/ipp"}
+     :body (bs/to-input-stream (byte-array (map unchecked-byte resp)))}))
 
 (def ^:private malformed-request {
   :status 400

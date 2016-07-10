@@ -7,7 +7,7 @@
 
 
 (defn handler?
-  "Checks if H is a valid handler (e.g. at minimum implementes
+  "Checks if H is a valid handler (e.g. at minimum implements
   IPrintJobHandler)"
   [h]
   (satisfies? IPrintJobHandler h))

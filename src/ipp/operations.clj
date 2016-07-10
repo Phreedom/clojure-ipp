@@ -47,8 +47,7 @@
     "copies-default" [(value :integer 1)]
     "color-supported" [(value :boolean true)]
     "sides-default" [(value :keyword "one-sided")]
-    "sides-supported" [(value :keyword "one-sided")]
-  }})
+    "sides-supported" [(value :keyword "one-sided")]}})
 
 (defn ^:private construct-operation-attributes-group [status]
   {:group :operation-attributes :attrs {
@@ -108,8 +107,7 @@
     (construct-ipp-response req :successful [{:group :job-attributes :attrs {
       "job-uri" [(value :uri (job-id-to-uri config job-id))]
       "job-id" [(value :integer job-id)]
-      "job-state" [(value :enum (:completed job-state))]
-    }}])))
+      "job-state" [(value :enum (:completed job-state))]}}])))
 
 ; Report all jobs as completed because we finish processing the job
 ; during the print-job request.
