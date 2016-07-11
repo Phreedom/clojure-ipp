@@ -23,11 +23,11 @@
        (= (get-in request [:headers "content-type"]) "application/ipp")))
 
 (defn ^:private construct-http-response [ipp-response]
-  (let [resp (serializer/ipp-response ipp-response)]
-    (log/trace (with-out-str (bs/print-bytes (bs/to-byte-buffer (byte-array (map unchecked-byte resp))))))
+  (let [resp (byte-array (serializer/ipp-response ipp-response))]
+    (log/trace (with-out-str (bs/print-bytes (bs/to-byte-buffer resp))))
     {:status 200
      :headers {"content-type" "application/ipp"}
-     :body (bs/to-input-stream (byte-array (map unchecked-byte resp)))}))
+     :body (bs/to-input-stream resp)}))
 
 (def ^:private malformed-request {
   :status 400

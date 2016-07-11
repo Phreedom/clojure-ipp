@@ -10,7 +10,7 @@
     (accept-job [_ queue job]
       (log/info "got job on queue" queue)
       (log/info (dissoc job :data))
-      (bs/print-bytes (bs/to-byte-buffer (byte-array (take 256 (map unchecked-byte (:data job)))))))))
+      (bs/print-bytes (bs/to-byte-buffer (byte-array (take 256 (:data job))))))))
 
 (defonce my-server (make-server {
   :host "localhost"
