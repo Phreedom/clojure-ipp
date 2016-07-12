@@ -10,8 +10,8 @@
 
 (defn get-attr-value [req group name]
   (let [group-map (first (filter #(= group (:group %)) (:groups req)))
-        attr (when group-map (get-in group-map [:attrs name]))]
-    (when attr (:value (first attr)))))
+        attr (get-in group-map [:attrs name])]
+    (:value (first attr))))
 
 (defn ^:private construct-printer-attributes-group [{:keys [uri name]}]
   {:group :printer-attributes :attrs
