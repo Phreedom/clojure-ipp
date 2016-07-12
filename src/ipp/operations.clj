@@ -91,8 +91,8 @@
   (str (:uri config) "/job" id))
 
 (defn ^:private uri-to-job-id [uri]
-  (let [job-str (last (re-find (re-pattern "/job(\\d+)$") nil))]
-    (when job-str (Integer. job-str))))
+  (when-let [job-str (last (re-find (re-pattern "/job(\\d+)$") uri))]
+    (Integer. job-str)))
 
 ; We grab the PDF file, send it to the handler and report the job as complete.
 ; CUPS doesn't believe it, and tends to follow up with get-jobs and get-job-attributes to confirm.
