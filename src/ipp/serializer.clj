@@ -34,29 +34,29 @@
 
 (defn attribute-value [{:keys [type value]}]
   (cond
-    (get character-string-type-to-tag type)
+    (character-string-type-to-tag type)
       (ipp-string value)
     (= type :boolean)
       (compose (int16 1)
                (int8 (if value 1 0)))
-    (get integer-type-to-tag type)
+    (integer-type-to-tag type)
       (compose (int16 4)
                (int32 value))
-    (get reserved-type-to-tag type)
+    (reserved-type-to-tag type)
       (ipp-string value)
     :else
       (throw (IllegalArgumentException.
                 "unsupported attribute value type"))))
 
 (defn extra-value [{:keys [type value] :as orig}]
-  (compose (int8 (get attribute-value-type-to-tag type))
+  (compose (int8 (attribute-value-type-to-tag type))
            (int16 0)
            (attribute-value orig)))
 
 (defn attribute [[attr [value & extra]]]
   {:pre [(map? value)]}
   (compose
-    (int8 (get attribute-value-type-to-tag (:type value)))
+    (int8 (attribute-value-type-to-tag (:type value)))
     (ipp-string attr)
     (attribute-value value)
     (mapcompose extra-value extra)))
@@ -64,7 +64,7 @@
 (defn attribute-group [{:keys [group attrs]}]
   {:pre [(map? attrs)]}
   (compose
-    (int8 (get attribute-group-type-to-code group))
+    (int8 (attribute-group-type-to-code group))
     (mapcompose attribute attrs)))
 
 (defn ipp-response [{:keys [version_major version_minor op request_id groups body]}]

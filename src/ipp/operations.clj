@@ -57,12 +57,12 @@
 (defn ^:private construct-ipp-response [{:keys [request_id]} status groups]
   {:version_major 2
    :version_minor 0
-   :op (get status-to-code status)
+   :op (status-to-code status)
    :request_id request_id
    :groups (concat [(construct-operation-attributes-group status)] groups)})
 
 (defmulti perform-operation (fn [config state req]
-                                (get tag-to-operation (:op req))))
+                                (tag-to-operation (:op req))))
 
 (defmethod perform-operation :default [_ _ req]
   (construct-ipp-response req :server-error-operation-not-supported []))
