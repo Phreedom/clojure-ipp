@@ -20,6 +20,7 @@
        "printer-state-reasons" [{:type :keyword, :value "none"}]
        "queued-job-count" [{:type :integer, :value 0xabc}]
        "printer-location" [{:type :text-without-language, :value "Virtual"}]
+       "some-false-value" [{:type :boolean :value false}]
        "natural-language-configured" [{:type :natural-language, :value "en"}]
        "printer-up-time" [{:type :integer, :value 1}]
        "printer-name" [{:type :name-without-language, :value "Pepa DMS IPP Printer"}]
