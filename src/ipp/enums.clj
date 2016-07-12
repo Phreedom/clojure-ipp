@@ -8,8 +8,8 @@
 
 ;;; attribute value types
 
-(def tag-to-character-string-type {
-  0x41 :text-without-language
+(def tag-to-character-string-type
+ {0x41 :text-without-language
   0x42 :name-without-language
   0x44 :keyword
   0x45 :uri
@@ -21,8 +21,8 @@
 (def character-string-type-to-tag
   (map-invert tag-to-character-string-type))
 
-(def tag-to-integer-type {
-  0x21 :integer
+(def tag-to-integer-type
+ {0x21 :integer
   0x22 :boolean
   0x23 :enum})
 
@@ -50,8 +50,8 @@
 ;;; attribute groups
 
 (def supported-attribute-groups
-  (merge {
-      0x01 :operation-attributes
+  (merge
+     {0x01 :operation-attributes
       0x02 :job-attributes
       0x04 :printer-attributes
       0x05 :unsupported-attributes}
@@ -66,8 +66,8 @@
 
 ;;; operations
 
-(def tag-to-operation {
-  0x02 :print-job
+(def tag-to-operation
+ {0x02 :print-job
   0x04 :validate-job
   0x08 :cancel-job
   0x09 :get-job-attributes
@@ -79,13 +79,13 @@
 
 ;;; states
 
-(def  printer-state {
-  :idle 3
+(def  printer-state
+ {:idle 3
   :processing 4
   :stopped 5})
 
-(def job-state {
-  :pending 3
+(def job-state
+ {:pending 3
   :pending-held 4
   :processing 5
   :processing-stopped 6
@@ -93,7 +93,7 @@
   :aborted 8
   :completed 9})
 
-(def status-to-code {
-  :successful 0x00
+(def status-to-code
+ {:successful 0x00
   :server-error-operation-not-supported 0x0501
   :client-error-bad-request 0x0400})

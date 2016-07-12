@@ -12,8 +12,8 @@
       (log/info (dissoc job :data))
       (bs/print-bytes (bs/to-byte-buffer (byte-array (take 256 (:data job))))))))
 
-(defonce my-server (make-server {
-  :host "localhost"
+(defonce my-server (make-server
+ {:host "localhost"
   :port 6311
   :handler my-handler
   :queue "documents"

@@ -71,8 +71,8 @@
        (zc/many attribute)))
 
 (def ipp-request
-  (<$> (fn [v-maj v-min op rid groups _] {
-         :version-major v-maj
+  (<$> (fn [v-maj v-min op rid groups _]
+        {:version-major v-maj
          :version-minor v-min
          :op op
          :groups groups

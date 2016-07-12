@@ -5,8 +5,8 @@
 
 (def supported-operations (vals operation-to-tag))
 
-(defn value [type val] {
-  :type type :value val})
+(defn value [type val]
+ {:type type :value val})
 
 (defn get-attr-value [req group name]
   (let [group-map (first (filter #(= group (:group %)) (:groups req)))
@@ -14,8 +14,8 @@
     (when attr (:value (first attr)))))
 
 (defn ^:private construct-printer-attributes-group [{:keys [uri name]}]
-  {:group :printer-attributes :attrs {
-    "printer-uri-supported" [(value :uri uri)]
+  {:group :printer-attributes :attrs
+   {"printer-uri-supported" [(value :uri uri)]
     "uri-security-supported" [(value :keyword "none")]
     "uri-authentication-supported" [(value :keyword "none")]
     "printer-name" [(value :name-without-language name)]
@@ -50,8 +50,8 @@
     "sides-supported" [(value :keyword "one-sided")]}})
 
 (defn ^:private construct-operation-attributes-group [status]
-  {:group :operation-attributes :attrs {
-    "attributes-charset" [(value :charset "utf-8")]
+  {:group :operation-attributes :attrs
+   {"attributes-charset" [(value :charset "utf-8")]
     "attributes-natural-language" [(value :natural-language "en")] }})
 
 (defn ^:private construct-ipp-response [{:keys [request-id]} status groups]
@@ -98,14 +98,14 @@
 ; CUPS doesn't believe it, and tends to follow up with get-jobs and get-job-attributes to confirm.
 (defmethod perform-operation :print-job [{:keys [queue handler] :as config} _ req]
   (assert (protocol/handler? handler))
-  (protocol/accept-job handler queue {
-    :job-name (get-attr-value req :operation-attributes "job-name")
+  (protocol/accept-job handler queue
+   {:job-name (get-attr-value req :operation-attributes "job-name")
     :document-name (get-attr-value req :operation-attributes "document-name")
     :data (:body req)})
   ; make job-id and job-uri follow the same pattern so that we have less state to manage
   (let [job-id (+ 1 (rand-int 0xffffff))]
-    (construct-ipp-response req :successful [{:group :job-attributes :attrs {
-      "job-uri" [(value :uri (job-id-to-uri config job-id))]
+    (construct-ipp-response req :successful [{:group :job-attributes :attrs
+     {"job-uri" [(value :uri (job-id-to-uri config job-id))]
       "job-id" [(value :integer job-id)]
       "job-state" [(value :enum (:completed job-state))]}}])))
 
@@ -120,8 +120,8 @@
         job-id-val (get-attr-value req :operation-attributes "job-id")
         job-id (or job-id-val job-uri-val)]
     (if job-id
-      (construct-ipp-response req :successful [{:group :job-attributes :attrs {
-        "job-uri" [(value :uri (job-id-to-uri config job-id))]
+      (construct-ipp-response req :successful [{:group :job-attributes :attrs
+       {"job-uri" [(value :uri (job-id-to-uri config job-id))]
         "job-id" [(value :integer job-id)]
         "job-state" [(value :enum (:completed job-state))]}}])
       (construct-ipp-response req :client-error-bad-request []))))

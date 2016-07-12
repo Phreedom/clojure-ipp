@@ -29,8 +29,8 @@
      :headers {"content-type" "application/ipp"}
      :body (bs/to-input-stream resp)}))
 
-(def ^:private malformed-request {
-  :status 400
+(def ^:private malformed-request
+ {:status 400
   :headers {"content-type" "text/html"}
   :body "Failed to parse IPP request"})
 
