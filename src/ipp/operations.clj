@@ -115,10 +115,10 @@
 ; "client-error-not-found" or "client-error-gone". Maybe this
 ; would be a better reply considering our implementation of get-jobs.
 (defmethod perform-operation :get-job-attributes [config _ req]
-  (let [job-uri-attr (get-attr-value req :operation-attributes "job-uri")
-        job-uri-val (when job-uri-attr (uri-to-job-id job-uri-attr))
-        job-id-val (get-attr-value req :operation-attributes "job-id")
-        job-id (or job-id-val job-uri-val)]
+  (let [job-uri-val (some-> (get-attr-value req :operation-attributes "job-uri")
+                            (uri-to-job-id))
+        job-id (-> (get-attr-value req :operation-attributes "job-id")
+                   (or job-uri-val))]
     (if job-id
       (construct-ipp-response req :successful [{:group :job-attributes :attrs
        {"job-uri" [(value :uri (job-id-to-uri config job-id))]
