@@ -67,13 +67,13 @@
     (int8 (attribute-group-type-to-code group))
     (mapcompose attribute attrs)))
 
-(defn ipp-response [{:keys [version_major version_minor op request_id groups body]}]
+(defn ipp-response [{:keys [version-major version-minor op request-id groups body]}]
   {:pre [(sequential? groups)]}
   (compose
-    (int8 version_major)
-    (int8 version_minor)
+    (int8 version-major)
+    (int8 version-minor)
     (int16 op)
-    (int32 request_id)
+    (int32 request-id)
     (mapcompose attribute-group groups)
     (int8 end-of-attributes-tag)
     (bytes body)))

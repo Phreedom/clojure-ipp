@@ -72,11 +72,11 @@
 
 (def ipp-request
   (<$> (fn [v-maj v-min op rid groups _] {
-         :version_major v-maj
-         :version_minor v-min
+         :version-major v-maj
+         :version-minor v-min
          :op op
          :groups groups
-         :request_id rid})
+         :request-id rid})
        zseq/any-token
        zseq/any-token
        int16

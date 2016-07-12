@@ -4,7 +4,7 @@
             [ipp.serializer :as serializer]))
 
 (def printer-attributes-response {
-   :version_major 2 :version_minor 0 :op 0 :request_id 10
+   :version-major 2 :version-minor 0 :op 0 :request-id 10
    :groups [
      {:group :printer-attributes :attrs {
        "ipp-versions-supported" [{:type :keyword :value "2.0"}]
@@ -38,7 +38,7 @@
          (dissoc (parser/parse-ipp-request (serializer/serialize-ipp-response printer-attributes-response)) :body))))
 
 (def quirks-sample {
-   :version_major 2 :version_minor 0 :op 0 :request_id 10
+   :version-major 2 :version-minor 0 :op 0 :request-id 10
    :groups [
      {:group :printer-attributes :attrs {
        "printer-is-accepting-jobs" [{:type :integer :value 111111}]

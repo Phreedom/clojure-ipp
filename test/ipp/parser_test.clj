@@ -10,7 +10,7 @@
   (map byte (slurp fname :encoding "ISO-8859-1")))
 
 (def parsed-request {
-  :version_major 2 :version_minor 0 :op 11 :request_id 1
+  :version-major 2 :version-minor 0 :op 11 :request-id 1
   :groups [{
     :group :operation-attributes
     :attrs {

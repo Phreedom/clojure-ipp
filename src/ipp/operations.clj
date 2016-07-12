@@ -54,11 +54,11 @@
     "attributes-charset" [(value :charset "utf-8")]
     "attributes-natural-language" [(value :natural-language "en")] }})
 
-(defn ^:private construct-ipp-response [{:keys [request_id]} status groups]
-  {:version_major 2
-   :version_minor 0
+(defn ^:private construct-ipp-response [{:keys [request-id]} status groups]
+  {:version-major 2
+   :version-minor 0
    :op (status-to-code status)
-   :request_id request_id
+   :request-id request-id
    :groups (concat [(construct-operation-attributes-group status)] groups)})
 
 (defmulti perform-operation (fn [config state req]
