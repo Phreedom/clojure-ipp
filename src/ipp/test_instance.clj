@@ -1,6 +1,6 @@
 (ns ipp.test-instance
-  (:use [ipp.server])
   (:require [ipp.protocol :as protocol]
+            [ipp.server :refer :all]
             [byte-streams :as bs]
             [clojure.tools.logging :as log]))
 

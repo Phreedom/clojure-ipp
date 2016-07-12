@@ -1,6 +1,6 @@
 (ns ipp.serializer
   (:refer-clojure :exclude [bytes])
-  (:use [ipp.enums]))
+  (:require [ipp.enums :refer :all]))
 
 (def compose concat)
 (def mapcompose mapcat)

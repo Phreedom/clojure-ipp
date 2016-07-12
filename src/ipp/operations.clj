@@ -1,7 +1,7 @@
 (ns ipp.operations
-  (:use [ipp.enums])
   (:require [byte-streams :as bs]
-            [ipp.protocol :as protocol]))
+            [ipp.protocol :as protocol]
+            [ipp.enums :refer :all]))
 
 (def supported-operations (vals operation-to-tag))
 

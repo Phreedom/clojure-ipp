@@ -1,6 +1,6 @@
 (ns ipp.parser
-  (:use [ipp.enums])
   (:require
+    [ipp.enums :refer :all]
     [zetta.core :as zetta :refer [<$>]]
     [zetta.parser.seq :as zseq]
     [zetta.parser.string :as zstr]

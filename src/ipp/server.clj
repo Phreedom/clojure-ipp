@@ -1,6 +1,6 @@
 (ns ipp.server
-  (:use [ipp.enums])
   (:require
+    [ipp.enums :refer :all]
     [ipp.protocol :as protocol]
     [ipp.parser :as parser]
     [ipp.serializer :as serializer]
