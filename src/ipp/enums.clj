@@ -23,11 +23,16 @@
 
 (def tag-to-integer-type
  {0x21 :integer
-  0x22 :boolean
   0x23 :enum})
 
 (def integer-type-to-tag
   (map-invert tag-to-integer-type))
+
+(def tag-to-boolean-type
+ {0x22 :boolean})
+
+(def boolean-type-to-tag
+  (map-invert tag-to-boolean-type))
 
 ; we must correctly recognize and skip the types we don't know
 (def tag-to-reserved-type
@@ -41,6 +46,7 @@
 
 (def tag-to-attribute-value-type
   (merge tag-to-integer-type
+         tag-to-boolean-type
          tag-to-character-string-type
          tag-to-reserved-type))
 

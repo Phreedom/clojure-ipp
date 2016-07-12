@@ -28,27 +28,28 @@
     (zetta/always (to-string str))))
 
 (defn attribute-value [type]
-  (cond
-    (tag-to-character-string-type type)
-      (zetta/do-parser
-        value <- fixed-string
-        (zetta/always {:type (tag-to-character-string-type type) :value value}))
-    (= type (:boolean integer-type-to-tag))
-      (zetta/do-parser
-        (zseq/take-with 2 #(= % [0 1])) ;size = 1
-        value <- (zseq/satisfy? #(or (= % 0) (= % 1))) ;value = 1|0
-        (zetta/always {:type :boolean :value (if (= 1 value) true false)}))
-    (tag-to-integer-type type)
-      (zetta/do-parser
-        (zseq/take-with 2 #(= % [0 4])) ;size = 4
-        value <- int32
-        (zetta/always {:type (tag-to-integer-type type) :value value}))
-    (tag-to-reserved-type type)
-      (zetta/do-parser
-        value <- fixed-string
-        (zetta/always {:type (tag-to-reserved-type type) :value value}))
-    :else
-      (zetta/fail-parser (str "Invalid attribute type: " type))))
+  (let [type-tag (tag-to-attribute-value-type type)]
+    (condp get type
+      tag-to-character-string-type
+        (zetta/do-parser
+          value <- fixed-string
+          (zetta/always {:type type-tag :value value}))
+      tag-to-boolean-type
+        (zetta/do-parser
+          (zseq/take-with 2 #(= % [0 1])) ;size = 1
+          value <- (zseq/satisfy? #(or (= % 0) (= % 1))) ;value = 1|0
+          (zetta/always {:type type-tag :value (if (= 1 value) true false)}))
+      tag-to-integer-type
+        (zetta/do-parser
+          (zseq/take-with 2 #(= % [0 4])) ;size = 4
+          value <- int32
+          (zetta/always {:type type-tag :value value}))
+      tag-to-reserved-type
+        (zetta/do-parser
+          value <- fixed-string
+          (zetta/always {:type type-tag :value value}))
+      :else
+        (zetta/fail-parser (str "Invalid attribute type: " type)))))
 
 (def additional-value
   (zetta/do-parser

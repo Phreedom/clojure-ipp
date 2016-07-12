@@ -33,16 +33,16 @@
       (bytes arr))))
 
 (defn attribute-value [{:keys [type value]}]
-  (cond
-    (character-string-type-to-tag type)
+  (condp get type
+    character-string-type-to-tag
       (ipp-string value)
-    (= type :boolean)
+    boolean-type-to-tag
       (compose (int16 1)
                (int8 (if value 1 0)))
-    (integer-type-to-tag type)
+    integer-type-to-tag
       (compose (int16 4)
                (int32 value))
-    (reserved-type-to-tag type)
+    reserved-type-to-tag
       (ipp-string value)
     :else
       (throw (IllegalArgumentException.
