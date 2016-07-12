@@ -36,12 +36,12 @@
           (zetta/always {:type type-tag :value value}))
       tag-to-boolean-type
         (zetta/do-parser
-          (zseq/take-with 2 #(= % [0 1])) ;size = 1
-          value <- (zseq/satisfy? #(or (= % 0) (= % 1))) ;value = 1|0
+          (zseq/take-with 2 #{[0 1]}) ;size = 1
+          value <- (zseq/satisfy? #{0 1})
           (zetta/always {:type type-tag :value (if (= 1 value) true false)}))
       tag-to-integer-type
         (zetta/do-parser
-          (zseq/take-with 2 #(= % [0 4])) ;size = 4
+          (zseq/take-with 2 #{[0 4]}) ;size = 4
           value <- int32
           (zetta/always {:type type-tag :value value}))
       tag-to-reserved-type
@@ -60,7 +60,7 @@
 
 (def attribute
   (zetta/do-parser
-    type <- (zseq/satisfy? #(tag-to-attribute-value-type %))
+    type <- (zseq/satisfy? tag-to-attribute-value-type)
     name <- fixed-string
     value <- (attribute-value type)
     extra-values <-(zc/many additional-value)
@@ -68,7 +68,7 @@
 
 (def attribute-group
   (<$> (fn [type attrs] {:group (supported-attribute-groups type) :attrs (into {} attrs)})
-       (zseq/satisfy? #(supported-attribute-groups %))
+       (zseq/satisfy? supported-attribute-groups)
        (zc/many attribute)))
 
 (def ipp-request
@@ -83,7 +83,7 @@
        int16
        int32
        (zc/many attribute-group)
-       (zseq/satisfy? #(= % end-of-attributes-tag))))
+       (zseq/satisfy? #{end-of-attributes-tag})))
 
 (defn parse-ipp-request [body]
   (let [req (zetta/parse-once ipp-request body)]
